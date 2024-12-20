@@ -29,7 +29,6 @@ CREATE TABLE geomagnetic_fingerprinting (
 
 CREATE TABLE wifi_fingerprinting (
     id VARCHAR(26),
-    mac_address VARCHAR(17),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     coordinate_id SERIAL REFERENCES coordinates(id),

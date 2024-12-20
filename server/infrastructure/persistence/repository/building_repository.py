@@ -1,38 +1,38 @@
-from infrastructure.dto import FloorRepositoryDto
+from infrastructure.dto import BuildingRepositoryDto
 from infrastructure.errors.infrastructure_error import InfrastructureError, InfrastructureErrorType
 from psycopg2.extensions import connection
 
 
-class FloorRepository:
+class BuildingRepository:
     def find_for_id(
         self,
         conn: connection,
-        floor_id: str,
-    ) -> FloorRepositoryDto:
+        building_id: str,
+    ) -> BuildingRepositoryDto:
         with conn, conn.cursor() as cursor:
             try:
                 cursor.execute(
-                    "SELECT level, name, building_id FROM floors WHERE id = %s",
-                    (floor_id,),
+                    "SELECT name, latitude, longitude FROM buildings WHERE id = %s",
+                    (building_id,),
                 )
 
                 result = cursor.fetchone()
                 if result is not None:
-                    level = result[0]
-                    name = result[1]
-                    building_id = result[2]
+                    name = result[0]
+                    latitude = result[1]
+                    longitude = result[2]
                 else:
                     raise InfrastructureError(
-                        InfrastructureErrorType.NOT_FOUND_FLOOR,
+                        InfrastructureErrorType.NOT_FOUND_BUILDING,
                         detail="Floor not found",
                         status_code=404,
                     )
 
-                return FloorRepositoryDto(
-                    id=floor_id,
+                return BuildingRepositoryDto(
+                    id=building_id,
                     name=name,
-                    level=level,
-                    building_id=building_id,
+                    latitude=latitude,
+                    longitude=longitude,
                 )
 
             except Exception as e:

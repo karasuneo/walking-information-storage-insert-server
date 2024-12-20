@@ -15,5 +15,8 @@ destroy:
 logs:
 	docker compose logs -f
 
-restart:
+re-up:
 	rm -rf ./docker/postgres/data && docker compose down && docker compose build && docker compose up -d && docker compose logs -f
+
+format:
+	black . && isort . && ruff check --fix

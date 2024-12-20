@@ -1,11 +1,3 @@
-from .application_dto import (
-                              FinishWalkingServiceDto,
-                              MovePedestrianServiceDto,
-                              StartWalkingServiceDto,
-)
+from .application_dto import InsertFpModelDto
 
-__all__ = [
-    "StartWalkingServiceDto",
-    "FinishWalkingServiceDto",
-    "MovePedestrianServiceDto",
-]
+__all__ = ["InsertFpModelDto"]

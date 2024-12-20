@@ -1,0 +1,46 @@
+[tool.ruff]
+line-length = 100
+indent-width = 4
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "ANN1",   # selfやclsの型ヒントが不足
+    "E999",   # 構文エラー
+    "UP027",  # リスト内包のアンパック
+    "PT004",  # pytestのfixture名にアンダースコアが不足
+    "PT005",  # pytestのfixture名にアンダースコアが不適切
+    "D1",     # ドキュメント未記載
+    "TD001",  # 無効なTODOタグ
+    "TD002",  # TODOの作成者が不足
+    "TD003",  # TODOのリンクが不足
+    "PD011",  # pandasの`.values`使用
+    "INP001", # input関連のエラー
+    "TRY301", # try except pass の禁止
+    "N806",   # exceptブロック内の変数名が不適切
+    "FBT001", # finallyブロックでassertを使用
+    "D203",   # クラスdocstring前に1行の空行が必要
+    "D212",   # 複数行docstringの要約は2行目から開始すべき
+    "COM812", # コメント記号の後にスペースが不足
+    "ISC001", # 暗黙的な文字列連結
+    "N803",   # exceptブロック内の変数名が不適切
+    "N815",   # exceptブロック内の変数名が不適切
+    "PLR0913", # f-stringの使用を推奨
+    "N802",   # 関数名は小文字であるべき
+    "D400",   # docstringの1行目はピリオドで終わるべき
+    "D415",   # docstringの1行目はピリオドで終わるべき
+    "PLR0915" # f-stringの使用を推奨
+]
+unfixable = [
+    "F401",   # 未使用のimport
+    "F841",   # 未使用の変数
+    "ERA001", # コメントアウトされたコード
+]
+
+logger-objects = ["src.library.logger.LOGGER"]
+
+[tool.ruff.lint.pylint]
+max-args = 6

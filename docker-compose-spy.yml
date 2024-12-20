@@ -1,0 +1,32 @@
+services:
+  spy:
+    container_name: spy
+    build:
+      context: .
+      dockerfile: ./docker/schemaspy/Dockerfile
+    image: schemaspy/schemaspy
+    tty: true
+    volumes:
+      - ./output:/output
+      - ./docker/schemaspy/schemaspy.properties.template:/schemaspy.properties.template
+      - ./docker/schemaspy/drivers/postgresql-42.6.0.jar:/drivers/postgresql.jar
+    env_file:
+      - .env
+    networks:
+      - trajectory-storage-network
+
+  nginx_schemaspy:
+    container_name: "nginx_schemaspy"
+    image: nginx
+    depends_on:
+      - spy
+    ports:
+      - "8080:80"
+    volumes:
+      - ./output:/usr/share/nginx/html
+    networks:
+      - trajectory-storage-network
+
+networks:
+  trajectory-storage-network:
+    driver: bridge

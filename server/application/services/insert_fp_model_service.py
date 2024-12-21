@@ -1,8 +1,8 @@
 from application.dto.application_dto import InsertFpModelDto
-from config.const import HEALTH_CHECK_BUCKET_NAME
 from infrastructure.connection import DBConnection, MinIOConnection
 from infrastructure.external.services import FileService
 from infrastructure.persistence.repository import CoordinateRepository, WifiFingerPrintingRepository
+from utils.bucket import get_fp_model_bucket_name
 
 
 class InsertFpModelService:
@@ -27,12 +27,14 @@ class InsertFpModelService:
         wifi_fingerprinting_repo = WifiFingerPrintingRepository()
 
         coordinate_repo_dto = coordinate_repo.find_for_coordinate(conn=conn, x=x, y=y)
-        _ = wifi_fingerprinting_repo.save(
+        wifi_fingerprinting_dto = wifi_fingerprinting_repo.save(
             conn=conn, coordinate_id=coordinate_repo_dto.id
         )
 
         file_service.upload(
-            key=f"{HEALTH_CHECK_BUCKET_NAME}/{building_id}/{floor_id}/{x}/{y}",
+            key=get_fp_model_bucket_name(
+                floor_id=floor_id, x=x, y=y, fp_model_id=wifi_fingerprinting_dto.id
+            ),
             file=fp_model_file,
         )
 

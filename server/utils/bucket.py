@@ -1,12 +1,17 @@
+from __future__ import annotations
+
 from config.const import (
     ACCELEROMETER_BUCKET_NAME,
     ACCELEROMETER_EXTENSION,
     ATMOSPHERIC_PRESSURE_BUCKET_NAME,
     ATMOSPHERIC_PRESSURE_EXTENSION,
+    COORDINATE_BUCKET_NAME,
     FLOOR_BUCKET_NAME,
     FLOOR_INFORMATION_BUCKET_NAME,
     FLOOR_MAP_BUCKET_NAME,
     FLOOR_MAP_EXTENSION,
+    FP_MODEL_BUCKET_NAME,
+    FP_MODEL_EXTENSION,
     GPS_BUCKET_NAME,
     GPS_EXTENSION,
     GYROSCOPE_BUCKET_NAME,
@@ -99,4 +104,14 @@ def get_atmospheric_pressure_bucket_name(
         f"{WALKING_INFORMATION_BUCKET_NAME}/{walking_information_id}/"
         f"{ATMOSPHERIC_PRESSURE_BUCKET_NAME}/{atmospheric_pressure_id}."
         f"{ATMOSPHERIC_PRESSURE_EXTENSION}"
+    )
+
+
+# floors/${floor_id}/coordinates/${x}/${y}/fp_models/${fp_model_id}.csv
+def get_fp_model_bucket_name(floor_id: str, x: int, y: int, fp_model_id: str) -> str:
+    return (
+        f"{FLOOR_BUCKET_NAME}/{floor_id}/"
+        f"{COORDINATE_BUCKET_NAME}/{x}/{y}/"
+        f"{FP_MODEL_BUCKET_NAME}/{fp_model_id}."
+        f"{FP_MODEL_EXTENSION}"
     )
